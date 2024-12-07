@@ -6,7 +6,7 @@ import { getDoc } from "firebase/firestore";
 function ProfilePage() {
   console.log(auth.currentUser);
 
-  const [user, setUser] = useState();
+  const [email, setEmail] = useState();
   const [name, setName] = useState();
 
   const fetchUser = async () => {
@@ -25,9 +25,10 @@ function ProfilePage() {
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      console.log(user);
-      setUser(user?.email);
-      fetchUser();
+      if (user) {
+        setEmail(user?.email);
+        fetchUser();
+      }
     });
   }, []);
 
@@ -43,7 +44,7 @@ function ProfilePage() {
       <div className="bg-red-400 rounded-lg w-[300px] h-[300px] flex flex-col justify-center items-center shadow-lg">
         <div className="flex flex-col items-center">
           <h2 className="font-bold text-lg text-blue-600 mb-2">{name}</h2>
-          <p className="text-blue-600">{user}</p>
+          <p className="text-blue-600">{email}</p>
         </div>
       </div>
     </div>
