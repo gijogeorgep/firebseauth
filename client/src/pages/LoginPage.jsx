@@ -1,12 +1,13 @@
-import { Link, useActionData } from "react-router-dom";
-import { auth } from "../firebase";
+import { Link } from "react-router-dom";
+import { auth } from "../firebase"; // Ensure this is initialized properly
 import { useState } from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom"; // Correct import
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // Error state
 
   let navigate = useNavigate();
 
@@ -16,16 +17,10 @@ function LoginPage() {
       .then((userCredential) => {
         console.log("user signed in");
         navigate("/profile");
-
-        // Signed in
-        // const user = userCredential.user;
-        // ...
       })
       .catch((error) => {
+        setError(error.message); // Set user-friendly error
         console.log(error);
-
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
       });
   };
 
@@ -46,7 +41,7 @@ function LoginPage() {
               type="email"
               placeholder="Enter your email"
               required
-              className="mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-cyan-500"
+              className="mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-cyan-500 focus:ring-offset-2"
             />
           </div>
 
@@ -60,9 +55,14 @@ function LoginPage() {
               type="password"
               placeholder="Enter your password"
               required
-              className="mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-cyan-500"
+              className="mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-cyan-500 focus:ring-offset-2"
             />
           </div>
+
+          {/* Error Message */}
+          {error && (
+            <p className="text-red-500 text-sm text-center mt-2">{error}</p>
+          )}
 
           {/* Submit Button */}
           <button
