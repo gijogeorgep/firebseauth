@@ -6,9 +6,9 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { useState } from "react";
-import { auth } from "../firebase";
+import { auth } from "../Firebase";
 import { doc, setDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../Firebase";
 import { FcGoogle } from "react-icons/fc";
 
 function RegisterPage() {
